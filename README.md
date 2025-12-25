@@ -1,2 +1,2 @@
-# FinanceTracker
-Currently working on this finance tracker to brush up on my C# and learn .NET
+# TodoList
+Currently working on this todo list app to brush up on my C# and learn .NET and React
