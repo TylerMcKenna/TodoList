@@ -1,8 +1,14 @@
 import TodoRow from "./TodoRow.jsx"
 
-export default function TodoTable({ todos }) {
+export default function TodoTable({ todos, filterText }) {
     const rows = [];
     todos.forEach((todo) => {
+        if (
+            todo.name.toLowerCase().indexOf(
+                filterText.toLowerCase()
+            ) === -1
+        ) { return; }
+
         rows.push(
             <TodoRow todo={todo}/>
         )
