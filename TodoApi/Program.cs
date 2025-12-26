@@ -1,8 +1,22 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<TodoDb>(opt => opt.UseInMemoryDatabase("Todolist"));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+builder.Services.AddCors(Options =>
+{
+   Options.AddPolicy(name: MyAllowSpecificOrigins,
+                     policy =>
+                     {
+                         policy.WithOrigins("http://localhost:5173")
+                         .AllowAnyMethod()
+                         .AllowAnyHeader();
+                     });
+});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApiDocument(config =>
@@ -13,6 +27,9 @@ builder.Services.AddOpenApiDocument(config =>
 });
 
 var app = builder.Build();
+
+// Bad if in production
+app.UseCors(MyAllowSpecificOrigins);
 
 if (app.Environment.IsDevelopment())
 {
