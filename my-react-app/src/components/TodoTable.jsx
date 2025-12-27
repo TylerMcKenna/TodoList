@@ -1,6 +1,6 @@
 import TodoRow from "./TodoRow.jsx"
 
-export default function TodoTable({ todos, filterText }) {
+export default function TodoTable({ todos, setTodos, filterText }) {
     const rows = [];
     todos.forEach((todo) => {
         if (
@@ -10,7 +10,11 @@ export default function TodoTable({ todos, filterText }) {
         ) { return; }
 
         rows.push(
-            <TodoRow todo={todo}/>
+            <TodoRow 
+                key={todo.id}
+                todo={todo} 
+                setTodos={setTodos}
+            />
         )
     })
 

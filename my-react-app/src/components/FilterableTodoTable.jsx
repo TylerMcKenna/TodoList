@@ -32,6 +32,7 @@ export default function FilterableTodoTable() {
             />
             <TodoTable 
                 todos={todos} 
+                setTodos={setTodos}
                 filterText={filterText} 
             />
         </div>
