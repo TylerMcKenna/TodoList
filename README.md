@@ -20,5 +20,6 @@ You may have to configure the urls in the frontend's fetch requests, as I hard c
 3. Navigate one terminal to the backend `cd TodoApi`
 4. Start the backend `dotnet run`
 5. Navigate the other terminal to the frontend `cd frontend`
-6. Start the frontend `npm run dev`
-7. Navigate to the address provided by the frontend
+6. Install npm packages `npm i`
+7. Start the frontend `npm run dev`
+8. Navigate to the address provided by the frontend
