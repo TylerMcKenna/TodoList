@@ -1,3 +1,4 @@
+import CreateTodo from "./CreateTodo.jsx";
 import SearchBar from "./SearchBar.jsx";
 import TodoTable from "./TodoTable.jsx";
 import { useState, useEffect } from "react";
@@ -26,6 +27,10 @@ export default function FilterableTodoTable() {
 
     return (
         <div>
+            <CreateTodo
+                todos={todos}
+                setTodos={setTodos}
+            />
             <SearchBar 
                 filterText={filterText} 
                 onFilterTextChange={setFilterText} 

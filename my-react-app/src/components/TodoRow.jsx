@@ -5,14 +5,12 @@ export default function TodoRow({ todo, setTodos }) {
                         ? true
                         : false;
 
-
     async function switchStatus() {
         const updatedTodo = {
             ...todo, 
             isComplete: !todo.isComplete
         };
 
-        // Optimistically update frontend
         setTodos(todos => 
             todos.map(currTodo =>
                 currTodo.id === todo.id 
@@ -20,7 +18,7 @@ export default function TodoRow({ todo, setTodos }) {
                     : currTodo
             )
         );
-        // Attempt persist
+
         try {
             const response = await fetch(`http://127.0.0.1:5105/todoitems/${todo.id}`,
                 {
@@ -31,9 +29,11 @@ export default function TodoRow({ todo, setTodos }) {
                     body: JSON.stringify(updatedTodo)
                 }
             );
-        } 
-        // Roll back on failture
-        catch {
+            
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);    
+            }
+        } catch(error) {
             setTodos(todos => 
                 todos.map(currTodo => 
                     currTodo.id === todo.id
@@ -41,6 +41,26 @@ export default function TodoRow({ todo, setTodos }) {
                         : currTodo
                 )
             );
+            console.error(error.message);
+        }
+
+    }
+
+    async function deleteTodo() {
+        try{
+            const response = await fetch(`http://127.0.0.1:5105/todoitems/${todo.id}`, {
+                method: "DELETE"
+            });
+            
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+            
+            setTodos(todos => 
+                todos.filter(currTodo => currTodo.id !== todo.id)
+            );
+        } catch(error) {
+            console.error(error.message);
         }
 
     }
@@ -55,6 +75,13 @@ export default function TodoRow({ todo, setTodos }) {
                 />
             </td>
             <td>{todo.name}</td>
+            <td>
+                <input
+                    type="button"
+                    value="Delete"
+                    onClick={deleteTodo}
+                />
+            </td>
         </tr>
     );
 }

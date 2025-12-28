@@ -24,6 +24,7 @@ export default function TodoTable({ todos, setTodos, filterText }) {
                 <tr>
                     <th>Completed</th>
                     <th>Task Name</th>
+                    <th>Delete Task</th>
                 </tr>
             </thead>
             <tbody>{rows}</tbody>
